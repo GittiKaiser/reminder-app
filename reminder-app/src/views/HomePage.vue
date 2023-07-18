@@ -7,8 +7,7 @@
     </ion-header>
 
     <ion-content>  
-      <ion-button>expand:"Erinnerung hinzufügen" :disabled=false</ion-button>
-      <ion-button :disabled="true">Disabled</ion-button>
+      <ion-button expand="block" :disabled="false">Erinnerung hinzufügen</ion-button>
     </ion-content>
   </ion-page>
 </template>
@@ -25,7 +24,13 @@ import {
 import { defineComponent } from "vue";
 
 export default defineComponent({
-    components: { IonButton },
+  components: { 
+    IonContent, 
+    IonHeader, 
+    IonPage, 
+    IonTitle, 
+    IonToolbar, 
+    IonButton }
   });
 
 </script>
