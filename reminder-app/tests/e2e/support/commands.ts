@@ -1,9 +1,9 @@
-/// <reference types="cypress" />
+// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
 // existing commands.
-// HALLO DAS IST NUR EIN TEST VON MIR; OB ES MIT DEM PULL; COMMIT UND ADD FUNKTIONIERT.
+// 
 // For more comprehensive examples of custom
 // commands please read more here:
 // https://on.cypress.io/custom-commands
