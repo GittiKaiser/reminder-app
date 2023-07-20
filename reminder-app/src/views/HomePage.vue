@@ -83,7 +83,13 @@ const addReminder = async() => {
         text: 'Hinzufügen',
         handler: async (data) => {
           const { text, date, time } = data;
-            
+            if (!text) {
+                // Falls das Feld "text" nicht gefüllt ist, eine Meldung ausgeben und den Eingabe-Dialog erneut anzeigen
+                alert("Das Feld 'Titel' ist ein Pflichtfeld!");
+                // Rücksprung auf addReminder
+                addReminder();
+                return;
+            }            
             const reminder = {
                 text,
                 date,
