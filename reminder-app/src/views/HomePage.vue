@@ -81,7 +81,7 @@ const addReminder = async() => {
       },
       {
         text: 'Hinzufügen',
-        handler: (data) => {
+        handler: async (data) => {
           const { text, date, time } = data;
 
             const reminder = {
@@ -98,6 +98,8 @@ const addReminder = async() => {
             // Code to schedule a local notification using the dateTime value
             // This will depend on the specific plugin/library you are using for local notifications
           }
+          // Speichern der Änderungen im Local Storage
+          await saveReminders();
         }
       }
     ]
