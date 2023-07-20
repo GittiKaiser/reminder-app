@@ -33,7 +33,8 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  alertController
+  alertController,
+  IonAlert
 } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
 
@@ -52,15 +53,14 @@ const reminders = ref([
 ]);
 
 const addReminder = async() => {
-  const alert = await alertController.create({
+  const inputDialog = await alertController.create({
     header: 'Erinnerung hinzufügen',
     inputs: [
       {
-        name: 'text',
+        name: 'titel',
         type: 'text',
-        placeholder: 'Text',
-        attributes: {required: true,},
-      },
+        placeholder: 'Titel',
+        },
       {
         name: 'date',
         type: 'date',
@@ -80,39 +80,46 @@ const addReminder = async() => {
       {
         text: 'Hinzufügen',
         handler: (data) => {
-          const { text, date, time } = data;
+            const { text, date, time } = data;
 
-          const reminder = {
-            text,
-            date,
-            time,
-          };
+            if (!text) {
+                // Falls das Feld "text" nicht gefüllt ist, eine Meldung ausgeben und den Eingabe-Dialog erneut anzeigen
+                alert("Das Feld 'Titel' ist ein Pflichtfeld!");
+                // Rücksprung auf addReminder
+                addReminder();
+                return;
+            }
 
-          reminders.value.push(reminder);
+            const reminder = {
+                text,
+                date,
+                time,
+            };
 
-          // Check if both date and time are provided to schedule a local notification
-          if (date && time) {
-            const dateTime = new Date(`${date}T${time}`);
-            // Code to schedule a local notification using the dateTime value
-            // This will depend on the specific plugin/library you are using for local notifications
-          }
+            reminders.value.push(reminder);
+
+            // Check ob beide Date und Time bereitgestellt wurden, um eine lokale Benachrichtigung zu planen
+            if (date && time) {
+                const dateTime = new Date(`${date}T${time}`);
+                // Code zur Planung einer lokalen Benachrichtigung unter Verwendung des dateTime-Werts (abhängig von der verwendeten Bibliothek)
+            }
         }
       }
     ]
   });
 
-  await alert.present();
+  await inputDialog.present();
 };
 
 const editReminder = async (reminder) => {
-  const alert = await alertController.create({
+  const editDialog = await alertController.create({
     header: 'Erinnerung bearbeiten',
     inputs: [
       {
-        name: 'text',
+        name: 'titel',
         type: 'text',
         value: reminder.text,
-        placeholder: 'Text',
+        placeholder: 'Titel',
       },
       {
         name: 'date',
@@ -137,6 +144,13 @@ const editReminder = async (reminder) => {
         handler: (data) => {
           const { text, date, time } = data;
 
+            if (!text) {
+                // Falls das Feld "text" nicht gefüllt ist, eine Meldung ausgeben und den Eingabe-Dialog erneut anzeigen
+                alert("Das Feld 'Titel' ist ein Pflichtfeld!");
+                // Rücksprung auf editReminder
+                editReminder(reminder);
+                return;
+            }
           // Update the reminder properties
           reminder.text = text;
           reminder.date = date;
@@ -153,11 +167,11 @@ const editReminder = async (reminder) => {
     ]
   });
 
-  await alert.present();
+  await editDialog.present();
 };
 
 const deleteReminder = async (reminder) => {
-  const alert = await alertController.create({
+  const deleteDialog = await alertController.create({
     header: 'Löschen bestätigen',
     message: `Möchten Sie die Erinnerung "${reminder.text}" wirklich löschen?`,
     buttons: [
@@ -175,7 +189,7 @@ const deleteReminder = async (reminder) => {
     ]
   });
 
-  await alert.present();
+  await deleteDialog.present();
 };
 
 defineComponent({
@@ -200,3 +214,4 @@ defineComponent({
   },
 });
 </script>
+
