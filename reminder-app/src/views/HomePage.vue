@@ -59,6 +59,7 @@ const addReminder = async() => {
         name: 'text',
         type: 'text',
         placeholder: 'Text',
+        attributes: {required: true,},
       },
       {
         name: 'date',
