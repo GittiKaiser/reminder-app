@@ -83,7 +83,7 @@ const addReminder = async() => {
         text: 'Hinzufügen',
         handler: async (data) => {
           const { text, date, time } = data;
-
+            
             const reminder = {
                 text,
                 date,
