@@ -36,20 +36,22 @@ import {
   alertController
 } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
+import { Preferences } from '@capacitor/preferences';
+//import { CapacitorConfig } from '@capacitor/cli';
 
 // Mock data for testing
-const reminders = ref([
-  {
-    text: "Erinnerung 1",
-    date: "2023-07-19",
-    time: "09:00"
-  },
-  {
-    text: "Erinnerung 2",
-    date: "2023-07-20",
-    time: "14:30"
+const reminders = ref([]);
+
+const loadReminders = async () => {
+  const remindersData = await Preferences.get({ key: 'reminders' });
+  if (remindersData?.value) {
+    reminders.value = JSON.parse(remindersData.value);
   }
-]);
+};
+
+const saveReminders = async () => {
+  await Preferences.set({ key: 'reminders', value: JSON.stringify(reminders.value) });
+};
 
 const addReminder = async() => {
   const alert = await alertController.create({
@@ -78,7 +80,7 @@ const addReminder = async() => {
       },
       {
         text: 'Hinzufügen',
-        handler: (data) => {
+        handler: async (data) => {
           const { text, date, time } = data;
 
           const reminder = {
@@ -95,6 +97,8 @@ const addReminder = async() => {
             // Code to schedule a local notification using the dateTime value
             // This will depend on the specific plugin/library you are using for local notifications
           }
+          // Speichern der Änderungen im Local Storage
+          await saveReminders();
         }
       }
     ]
@@ -133,7 +137,7 @@ const editReminder = async (reminder) => {
       },
       {
         text: 'Speichern',
-        handler: (data) => {
+        handler: async (data) => {
           const { text, date, time } = data;
 
           // Update the reminder properties
@@ -147,6 +151,7 @@ const editReminder = async (reminder) => {
             // Code to update the scheduled local notification using the dateTime value
             // This will depend on the specific plugin/library you are using for local notifications
           }
+          await saveReminders();
         }
       }
     ]
@@ -166,9 +171,20 @@ const deleteReminder = async (reminder) => {
       },
       {
         text: 'Löschen',
-        handler: () => {
-          // Code to delete the reminder and cancel any scheduled notification
+        handler: async () => {
+          // Code zum Löschen eines Reminders aus dem Array
           reminders.value = reminders.value.filter((r) => r !== reminder);
+          // Code zum Löschen der geplanten Benachrichtigung
+          //try {
+          //  await LocalNotifications.cancel({
+          //    notifications: [{ id: reminder.id }]
+          //  });
+          //  console.log('Benachrichtigung gelöscht');
+          //} catch (error) {
+          //  console.error('Fehler beim Löschen der Benachrichtigung:', error);
+          //}
+          // Speichern der Änderungen im Local Storage
+          await saveReminders();
         }
       }
     ]
@@ -198,4 +214,8 @@ defineComponent({
     };
   },
 });
+
+// Beim Laden der Seite die Reminder-Daten aus dem Local Storage abrufen
+loadReminders();
+
 </script>
