@@ -1,0 +1,16 @@
+Navigieren in Ordnerstruktur:
+	cd <Ordnername> --> navigieren in nächste Ebene
+	cd <vollständiger Pfad> direktes navigieren in angegebenen Pfad
+	cd .. --> eine Ebene zurück navigieren
+	cd \ navigieren auf root
+Befehle GIT:
+	git clone <remote repos link>
+	git add <was soll gestaget werden?>
+		git add . --> alle Änderungen Stagen / lokal
+	git commit -m "Text für Commit" / lokal
+	git push --> in remote repos hinzufügen / global
+	git pull --> Alle Änderungen aus dem remote repos mit meinem lokalen repos mergen
+	git fetch --> Änderungen für dediziertes mergen vorbereiten und aus remote repos holen
+Ionic-Befehle:
+	npx ionic serve --> Echtzeit Vorschau der App
+	npm run dev --> Instanz als Version der App bei Ausführung
