@@ -40,7 +40,6 @@ import { defineComponent, ref } from "vue";
 import { Preferences } from '@capacitor/preferences';
 //import { CapacitorConfig } from '@capacitor/cli';
 
-// Mock data for testing
 const reminders = ref([]);
 
 const loadReminders = async () => {
@@ -59,7 +58,7 @@ const addReminder = async() => {
     header: 'Erinnerung hinzufügen',
     inputs: [
       {
-        name: 'titel',
+        name: 'text',
         type: 'text',
         placeholder: 'Titel',
         },
@@ -85,9 +84,13 @@ const addReminder = async() => {
           const { text, date, time } = data;
             if (!text) {
                 // Falls das Feld "text" nicht gefüllt ist, eine Meldung ausgeben und den Eingabe-Dialog erneut anzeigen
-                alert("Das Feld 'Titel' ist ein Pflichtfeld!");
+                //alert("Das Feld 'Titel' ist ein Pflichtfeld!");
+                await alertController.create({
+                  message: "Das Feld 'Titel' ist ein Pflichtfeld!",
+                  buttons: ['OK']
+                }).then(alert => alert.present());
                 // Rücksprung auf addReminder
-                addReminder();
+                //addReminder();
                 return;
             }            
             const reminder = {
@@ -119,7 +122,7 @@ const editReminder = async (reminder) => {
     header: 'Erinnerung bearbeiten',
     inputs: [
       {
-        name: 'titel',
+        name: 'text',
         type: 'text',
         value: reminder.text,
         placeholder: 'Titel',
@@ -149,9 +152,13 @@ const editReminder = async (reminder) => {
 
             if (!text) {
                 // Falls das Feld "text" nicht gefüllt ist, eine Meldung ausgeben und den Eingabe-Dialog erneut anzeigen
-                alert("Das Feld 'Titel' ist ein Pflichtfeld!");
+                //alert("Das Feld 'Titel' ist ein Pflichtfeld!");
+                await alertController.create({
+                  message: "Das Feld 'Titel' ist ein Pflichtfeld!",
+                  buttons: ['OK']
+                }).then(alert => alert.present());
                 // Rücksprung auf editReminder
-                editReminder(reminder);
+                //editReminder(reminder);
                 return;
             }
           // Update the reminder properties
