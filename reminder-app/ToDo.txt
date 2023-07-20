@@ -1,3 +1,5 @@
 Hier bitte alle ToDos dokumentieren:
 
-1. Bitte mal alle ihr GitHub auf die Reihe bekommen!
+offen		1. Speicherung der Erinnerungen		--> Felix
+erledigt	2. Überprüfung der Pflichtfelder	--> Simon 
+offen		3. Erzeugen der Benachrichtigung	--> Lukas
