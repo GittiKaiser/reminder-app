@@ -1,5 +1,9 @@
 Hier bitte alle ToDos dokumentieren:
 
-offen		1. Speicherung der Erinnerungen		--> Felix
-erledigt	2. Überprüfung der Pflichtfelder	--> Simon 
+erledigt		1. Speicherung der Erinnerungen		--> Felix
+erledigt	2. ï¿½berprï¿½fung der Pflichtfelder	--> Simon 
+ergÃ¤nzung       2.1 GeÃ¤ndert, dass wenn Pflichfeld nichtangegeben, "HinzufÃ¼gen-Prozess" Abbrechen, //alter Code auskommentiert  --> Felix          
 offen		3. Erzeugen der Benachrichtigung	--> Lukas
+
+offen       4. Idee: Fehlermeldung bei Errinerungen die in der Vergangenheit liegen? --> alle
+offen       5. Datetime Picker einbauen? --> alle
