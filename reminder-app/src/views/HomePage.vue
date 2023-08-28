@@ -9,10 +9,10 @@
     <ion-content>
       <ion-list>
         <ion-item v-for="(reminder, index) in reminders" :key="index">
-          <ion-label>{{ reminder.text }}</ion-label>
+          <ion-label class="ion-text-wrap">{{ reminder.text }}</ion-label>
           <ion-label>{{ reminder.date }}</ion-label>
           <ion-label>{{ reminder.time }}</ion-label>
-          <ion-button @click="editReminder(reminder)">Bearbeiten</ion-button>
+          <ion-button @click="editReminder(reminder)">bearbeiten</ion-button>
           <ion-button @click="deleteReminder(reminder)">Löschen</ion-button>
         </ion-item>
       </ion-list>
@@ -40,7 +40,8 @@ import { defineComponent, ref } from "vue";
 import { Preferences } from '@capacitor/preferences';
 //import { CapacitorConfig } from '@capacitor/cli';
 
-const reminders = ref([]);
+const reminders = ref<Reminder[]>([]);
+
 
 const loadReminders = async () => {
   const remindersData = await Preferences.get({ key: 'reminders' });
@@ -52,6 +53,12 @@ const loadReminders = async () => {
 const saveReminders = async () => {
   await Preferences.set({ key: 'reminders', value: JSON.stringify(reminders.value) });
 };
+
+interface Reminder {
+  text: string;
+  date: string;
+  time: string;
+}
 
 const addReminder = async() => {
   const inputDialog = await alertController.create({
@@ -93,7 +100,7 @@ const addReminder = async() => {
                 //addReminder();
                 return;
             }            
-            const reminder = {
+            const reminder: Reminder = {
                 text,
                 date,
                 time,
@@ -117,7 +124,7 @@ const addReminder = async() => {
   await inputDialog.present();
 };
 
-const editReminder = async (reminder) => {
+const editReminder = async (reminder: Reminder) => {
   const editDialog = await alertController.create({
     header: 'Erinnerung bearbeiten',
     inputs: [
@@ -181,7 +188,7 @@ const editReminder = async (reminder) => {
   await editDialog.present();
 };
 
-const deleteReminder = async (reminder) => {
+const deleteReminder = async (reminder: Reminder) => {
   const deleteDialog = await alertController.create({
     header: 'Löschen bestätigen',
     message: `Möchten Sie die Erinnerung "${reminder.text}" wirklich löschen?`,
